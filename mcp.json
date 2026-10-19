@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "moxo": {
+      "type": "http",
+      "url": "https://api.moxo.com/mcp-server",
+      "headers": {
+        "Authorization": "Bearer ${MOXO_API_TOKEN}"
+      }
+    }
+  }
+}
