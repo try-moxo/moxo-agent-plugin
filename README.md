@@ -1,6 +1,6 @@
 # Moxo
 
-Cursor plugin that connects agents to [Moxo](https://moxo.com) through Moxo's official remote [Model Context Protocol](https://modelcontextprotocol.io/) server.
+Cursor plugin that connects agents to [Moxo](https://moxo.com) through Moxo's official [Model Context Protocol](https://modelcontextprotocol.io/) server, [`@moxo/mcp-server`](https://www.npmjs.com/package/@moxo/mcp-server), run locally by Cursor.
 
 Moxo is a workflow platform for business processes that run across teams and clients. With this plugin an agent can see which flows need attention, read where a flow stands, start a flow from a template, complete steps, and send reminders, all in the signed-in user's Moxo organization.
 
@@ -18,17 +18,20 @@ Or run `/add-plugin moxo` in chat.
 {
   "mcpServers": {
     "moxo": {
-      "type": "http",
-      "url": "https://api.moxo.com/mcp-server",
-      "headers": {
-        "Authorization": "Bearer ${MOXO_API_TOKEN}"
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@moxo/mcp-server@1"],
+      "env": {
+        "MOXO_API_TOKEN": "${MOXO_API_TOKEN}"
       }
     }
   }
 }
 ```
 
-Auth is a Moxo **personal access token** sent as a bearer token. Create one in Moxo under **Settings → API keys → Create Personal Access Token** (it starts with `mxo_pat_`), then set it in **Dashboard → Plugins → Configure**.
+`@moxo/mcp-server` is a small local bridge: Cursor talks to it over stdio, and it forwards each request to Moxo at `https://api.moxo.com/mcp-server` over HTTPS. The tool catalogue lives on Moxo's servers, so new tools appear without updating the plugin. It is pinned to major version 1, so you get fixes but never a breaking change.
+
+Auth is a Moxo **personal access token**, passed to the bridge as `MOXO_API_TOKEN`. Create one in Moxo under **Settings → API keys → Create Personal Access Token** (it starts with `mxo_pat_`), then set it in **Dashboard → Plugins → Configure**.
 
 ## What the token can do
 
@@ -51,13 +54,15 @@ The server also offers three prompts (`/show_my_attention`, `/flow_activity_summ
 
 ## Notes
 
-- **Self-hosted Moxo:** change `url` in `mcp.json` to `https://<your-moxo-host>/mcp-server` after install.
-- **Org API keys** (`mxo_sk_…`) also work but act for the whole organization rather than a person, so tools that act as a person (`complete_step`, `invite_team_member`, and your attention queue) don't work with them. An org key reaches only the tools its scopes allow. Use a personal access token unless you are setting up shared automation.
+- **Node.js 20 or newer** has to be installed on the machine running Cursor, so that `npx` can download and run `@moxo/mcp-server` on first use.
+- **Self-hosted Moxo:** add `"MOXO_BASE_URL": "https://<your-moxo-host>"` to `env` in `mcp.json` after install. The bridge adds `/mcp-server` itself.
+- **Org API keys** (`mxo_sk_…`) also work if you add `"MOXO_ALLOW_ORG_KEY": "1"` to `env`, but they act for the whole organization rather than a person, so tools that act as a person (`complete_step`, `invite_team_member`, and your attention queue) don't work with them. An org key reaches only the tools its scopes allow. Use a personal access token unless you are setting up shared automation.
 - Requests are limited to 600 per minute per token.
 
 ## Docs
 
 - Moxo MCP server: https://developers.moxo.com/docs/mcp
+- npm package: https://www.npmjs.com/package/@moxo/mcp-server
 - Moxo REST API: https://developers.moxo.com/docs
 - Server URL: https://api.moxo.com/mcp-server
 

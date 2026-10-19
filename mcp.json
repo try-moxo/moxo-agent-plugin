@@ -1,10 +1,14 @@
 {
   "mcpServers": {
     "moxo": {
-      "type": "http",
-      "url": "https://api.moxo.com/mcp-server",
-      "headers": {
-        "Authorization": "Bearer ${MOXO_API_TOKEN}"
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@moxo/mcp-server@1"
+      ],
+      "env": {
+        "MOXO_API_TOKEN": "${MOXO_API_TOKEN}"
       }
     }
   }
