@@ -1,0 +1,22 @@
+{
+  "name": "moxo",
+  "owner": {
+    "name": "Moxo",
+    "email": "support@moxo.com"
+  },
+  "metadata": {
+    "description": "Moxo's plugin for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "moxo",
+      "description": "Track flows, start workflows, and complete steps.",
+      "source": {
+        "source": "github",
+        "repo": "try-moxo/moxo-agent-plugin"
+      },
+      "homepage": "https://developers.moxo.com/docs/mcp",
+      "category": "productivity"
+    }
+  ]
+}

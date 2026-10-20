@@ -1,0 +1,33 @@
+{
+  "name": "moxo",
+  "displayName": "Moxo",
+  "version": "1.1.0",
+  "description": "Track flows, start workflows, and complete steps.",
+  "author": {
+    "name": "Moxo",
+    "email": "support@moxo.com"
+  },
+  "homepage": "https://developers.moxo.com/docs/mcp",
+  "repository": "https://github.com/try-moxo/moxo-agent-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "moxo",
+    "workflow",
+    "automation",
+    "business-process",
+    "client-portal",
+    "approvals",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "userConfig": {
+    "moxo_api_token": {
+      "type": "string",
+      "title": "Moxo API token",
+      "description": "A personal access token (starts with mxo_pat_) from Moxo under Settings → API keys → Create Personal Access Token.",
+      "required": true,
+      "sensitive": true
+    }
+  }
+}
