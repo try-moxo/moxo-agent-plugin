@@ -2,6 +2,14 @@
 
 All notable changes to this plugin will be documented here.
 
+## 1.2.0
+
+- The plugin connects straight to Moxo's hosted server at `https://api.moxo.com/mcp-server` over HTTP again, with the token sent as `Authorization: Bearer <token>`. Moxo's servers now answer a connection on any server, so the problem that 1.0.1 worked around is gone. Node.js is no longer needed, and the plugin works in cloud agents.
+- Cursor: the server is configured in `.cursor-plugin/plugin.json`, the same way 1.0.0 did it. Set the token as before in **Dashboard → Plugins → Configure**.
+- Claude Code: `.mcp.json` sends the `moxo_api_token` option as the header. Nothing changes for people who already set it.
+- Agent Plugins: `mcp.json` names the server and carries no token, as the standard requires. Add the header in your client's MCP settings.
+- `@moxo/mcp-server` still works for clients that can only run local programs.
+
 ## 1.1.0
 
 - The repository is now `try-moxo/moxo-agent-plugin` (was `moxo-cursor-plugin`), since it serves more than Cursor. GitHub redirects the old address.

@@ -1,13 +1,12 @@
 # Moxo
 
-Plugin that connects AI agents in Cursor, Claude Code and other [Agent Plugins](https://agent-plugins.org) clients to [Moxo](https://moxo.com) through Moxo's official [Model Context Protocol](https://modelcontextprotocol.io/) server, [`@moxo/mcp-server`](https://www.npmjs.com/package/@moxo/mcp-server), run locally on your machine.
+Plugin that connects AI agents in Cursor, Claude Code and other [Agent Plugins](https://agent-plugins.org) clients to [Moxo](https://moxo.com) through Moxo's hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://api.moxo.com/mcp-server`. Nothing runs on your machine.
 
 Moxo is a workflow platform for business processes that run across teams and clients. With this plugin an agent can see which flows need attention, read where a flow stands, start a flow from a template, complete steps, and send reminders, all in the signed-in user's Moxo organization. Three skills turn the most common requests into a repeatable routine.
 
 ## Before you install
 
-- **Node.js 20 or newer** on the machine running your agent, so that `npx` can download and run `@moxo/mcp-server` on first use.
-- **A Moxo personal access token.** Create one in Moxo under **Settings → API keys → Create Personal Access Token**. It starts with `mxo_pat_`.
+You need a **Moxo personal access token**. Create one in Moxo under **Settings → API keys → Create Personal Access Token**. It starts with `mxo_pat_`.
 
 ## Install in Cursor
 
@@ -35,7 +34,13 @@ Claude Code asks for your **Moxo API token** when the plugin is enabled. It keep
 
 The repository root is an [Agent Plugins 1.0.0](https://agent-plugins.org/specification) package: `plugin.json`, `mcp.json` and `skills/`. Point your client at this repository the way it installs Agent Plugins.
 
-Agent Plugins 1.0.0 has no way for a plugin to ask for a secret; it leaves sign-in to each client. `mcp.json` sets `MOXO_API_TOKEN` to `${MOXO_API_TOKEN}`, which Cursor fills in from its plugin settings. A client that follows the standard strictly passes that text through unchanged, and the server can't sign in. In that case, use the skills from this package and add the `moxo` server to your client's own MCP settings with your token.
+Agent Plugins 1.0.0 has no way for a plugin to ask for a secret and doesn't allow a token in the plugin's files; it leaves sign-in to each client. So `mcp.json` names the server and nothing else. In your client's MCP settings, add this header to the `moxo` server:
+
+```
+Authorization: Bearer <your personal access token>
+```
+
+If your client can't send a header, run Moxo's npm package [`@moxo/mcp-server`](https://www.npmjs.com/package/@moxo/mcp-server) instead (see **Notes**).
 
 ## Skills
 
@@ -49,31 +54,31 @@ The skills build on the server's three prompts (`/show_my_attention`, `/start_fl
 
 ## MCP
 
-Every client runs the same server with `npx`. Each client reads its own file:
+Every client connects to the same server, `https://api.moxo.com/mcp-server`, over Streamable HTTP, and sends your token as `Authorization: Bearer <token>`. Each client reads its own configuration:
 
-| Client | File | Token comes from |
+| Client | Configuration | Token comes from |
 | --- | --- | --- |
-| Cursor | `mcp.json` (via `.cursor-plugin/plugin.json`) | The plugin's `MOXO_API_TOKEN` variable, set in **Dashboard → Plugins → Configure** |
+| Cursor | `mcpServers` in `.cursor-plugin/plugin.json` | The plugin's `MOXO_API_TOKEN` variable, set in **Dashboard → Plugins → Configure** |
 | Claude Code | `.mcp.json` (via `.claude-plugin/plugin.json`) | The plugin's `moxo_api_token` option, asked for when the plugin is enabled |
-| Other Agent Plugins clients | `mcp.json` | Up to the client (see above) |
+| Other Agent Plugins clients | `mcp.json` | Your client's MCP settings (see above) |
+
+This is the Cursor configuration:
 
 ```json
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
     "moxo": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@moxo/mcp-server@1"],
-      "env": {
-        "MOXO_API_TOKEN": "${MOXO_API_TOKEN}"
+      "type": "http",
+      "url": "https://api.moxo.com/mcp-server",
+      "headers": {
+        "Authorization": "Bearer ${MOXO_API_TOKEN}"
       }
     }
   }
 }
 ```
 
-`@moxo/mcp-server` is a small local bridge: your agent talks to it over stdio, and it forwards each request to Moxo at `https://api.moxo.com/mcp-server` over HTTPS. The tool catalogue lives on Moxo's servers, so new tools appear without updating the plugin. It is pinned to major version 1, so you get fixes but never a breaking change.
+The tool catalogue lives on Moxo's servers, so new tools appear without updating the plugin. Because the connection is plain HTTPS, it also works in cloud agents that can't run local programs.
 
 ## What the token can do
 
@@ -92,12 +97,13 @@ Write tools (`start_flow`, `complete_step`, `cancel_flow`, and the rest under **
 | Search and history | `search`, `query_audit_trail`, `get_org` |
 | Actions | `start_flow`, `complete_step`, `send_reminder`, `cancel_flow`, `archive_flow`, `create_external_user`, `invite_team_member` |
 
-The server also offers three prompts (`/show_my_attention`, `/flow_activity_summary`, `/start_flow_for`) and live resources for flows and your attention queue. The hosted server is the source of truth for tool names and schemas; new tools appear without reinstalling the plugin.
+The server also offers three prompts (`/show_my_attention`, `/flow_activity_summary`, `/start_flow_for`) and resources for flows and your attention queue. The hosted server is the source of truth for tool names and schemas; new tools appear without reinstalling the plugin.
 
 ## Notes
 
-- **Self-hosted Moxo:** add `"MOXO_BASE_URL": "https://<your-moxo-host>"` to the server's `env` after install. The bridge adds `/mcp-server` itself.
-- **Org API keys** (`mxo_sk_…`) also work if you add `"MOXO_ALLOW_ORG_KEY": "1"` to `env`, but they act for the whole organization rather than a person, so tools that act as a person (`complete_step`, `invite_team_member`, and your attention queue) don't work with them, and neither does the `morning-triage` skill. An org key reaches only the tools its scopes allow. Use a personal access token unless you are setting up shared automation.
+- **Self-hosted Moxo:** change the server URL to `https://<your-moxo-host>/mcp-server` after install.
+- **No header support:** a client that can only start local programs can run [`@moxo/mcp-server`](https://www.npmjs.com/package/@moxo/mcp-server) instead: `npx -y @moxo/mcp-server@1` with `MOXO_API_TOKEN` set to your token. It needs Node.js 20 or newer.
+- **Org API keys** (`mxo_sk_…`) also work as the token, but they act for the whole organization rather than a person, so tools that act as a person (`complete_step`, `invite_team_member`, and your attention queue) don't work with them, and neither does the `morning-triage` skill. An org key reaches only the tools its scopes allow. Use a personal access token unless you are setting up shared automation.
 - Requests are limited to 600 per minute per token.
 
 ## Docs
