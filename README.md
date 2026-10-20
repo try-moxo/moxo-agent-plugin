@@ -1,6 +1,6 @@
 # Moxo
 
-Plugin that connects AI agents in Cursor, Claude Code, Codex and other [Agent Plugins](https://agent-plugins.org) clients to [Moxo](https://moxo.com) through Moxo's hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://api.moxo.com/mcp-server`. Nothing runs on your machine.
+Plugin that connects AI agents in Cursor, Claude Code and Codex to [Moxo](https://moxo.com) through Moxo's hosted [Model Context Protocol](https://modelcontextprotocol.io/) server at `https://api.moxo.com/mcp-server`. Nothing runs on your machine.
 
 Moxo is a workflow platform for business processes that run across teams and clients. With this plugin an agent can see which flows need attention, read where a flow stands, start a flow from a template, complete steps, and send reminders, all in the signed-in user's Moxo organization. Three skills turn the most common requests into a repeatable routine.
 
@@ -32,7 +32,7 @@ Claude Code asks for your **Moxo API token** when the plugin is enabled. It keep
 
 ## Install in Codex
 
-In Codex, you add Moxo as an MCP server yourself. Codex reads the token from an environment variable, so the token never goes into Codex's config file.
+Codex reads your token from an environment variable, so the token never goes into Codex's config file.
 
 1. Add your token to your shell profile (for example `~/.zshrc`), so every new terminal has it:
 
@@ -40,27 +40,26 @@ In Codex, you add Moxo as an MCP server yourself. Codex reads the token from an 
    export MOXO_API_TOKEN="mxo_pat_..."
    ```
 
-2. Add the server:
+2. Add this repository as a plugin marketplace, then install the plugin from it:
 
    ```bash
-   codex mcp add moxo --url https://api.moxo.com/mcp-server --bearer-token-env-var MOXO_API_TOKEN
+   codex plugin marketplace add try-moxo/moxo-agent-plugin
+   codex plugin add moxo@moxo
    ```
 
 3. Open a new terminal and run `codex mcp list`. The `moxo` row shows `MOXO_API_TOKEN` under **Bearer Token Env Var** and `Bearer token` under **Auth**. Then start Codex from that terminal.
 
-This adds Moxo's tools but not the skills in this repository. Adding this repository with `codex plugin marketplace add` doesn't work yet: Codex finds no plugin in it, and the Codex CLI doesn't pass a personal token to a plugin's server.
+The plugin brings the Moxo server and the three skills. If you added Moxo by hand with `codex mcp add moxo` before, remove that first with `codex mcp remove moxo`. If you added this marketplace before version 1.3.0, run `codex plugin marketplace upgrade moxo` before `codex plugin add`.
 
-## Install in other Agent Plugins clients
+## Other clients
 
-The repository root is an [Agent Plugins 1.0.0](https://agent-plugins.org/specification) package: `plugin.json`, `mcp.json` and `skills/`. Point your client at this repository the way it installs Agent Plugins.
-
-Agent Plugins 1.0.0 has no way for a plugin to ask for a secret and doesn't allow a token in the plugin's files; it leaves sign-in to each client. So `mcp.json` names the server and nothing else. In your client's MCP settings, add this header to the `moxo` server:
+Add Moxo's server to your client's MCP settings: `https://api.moxo.com/mcp-server`, over Streamable HTTP, with this header:
 
 ```
 Authorization: Bearer <your personal access token>
 ```
 
-If your client can't send a header, run Moxo's npm package [`@moxo/mcp-server`](https://www.npmjs.com/package/@moxo/mcp-server) instead (see **Notes**).
+If your client can't send a header, run Moxo's npm package [`@moxo/mcp-server`](https://www.npmjs.com/package/@moxo/mcp-server) instead (see **Notes**). The skills in `skills/` follow the [Agent Skills](https://agentskills.io) format, so a client that supports it can load them from this repository.
 
 ## Skills
 
@@ -80,8 +79,8 @@ Every client connects to the same server, `https://api.moxo.com/mcp-server`, ove
 | --- | --- | --- |
 | Cursor | `mcpServers` in `.cursor-plugin/plugin.json` | The plugin's `MOXO_API_TOKEN` variable, set in **Dashboard → Plugins → Configure** |
 | Claude Code | `.mcp.json` (via `.claude-plugin/plugin.json`) | The plugin's `moxo_api_token` option, asked for when the plugin is enabled |
-| Codex | `~/.codex/config.toml`, written by `codex mcp add` | The `MOXO_API_TOKEN` environment variable |
-| Other Agent Plugins clients | `mcp.json` | Your client's MCP settings (see above) |
+| Codex | `.codex-mcp.json` (via `.codex-plugin/plugin.json`) | The `MOXO_API_TOKEN` environment variable |
+| Other clients | Your client's MCP settings | Your client's MCP settings (see above) |
 
 This is the Cursor configuration:
 
