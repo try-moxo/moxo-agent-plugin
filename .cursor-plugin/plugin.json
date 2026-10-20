@@ -1,14 +1,14 @@
 {
   "name": "moxo",
   "displayName": "Moxo",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Track flows, start workflows, and complete steps.",
   "author": {
     "name": "Moxo",
     "email": "support@moxo.com"
   },
   "homepage": "https://developers.moxo.com/docs/mcp",
-  "repository": "https://github.com/try-moxo/moxo-cursor-plugin",
+  "repository": "https://github.com/try-moxo/moxo-agent-plugin",
   "license": "Apache-2.0",
   "logo": "assets/logo.png",
   "keywords": [
@@ -40,5 +40,6 @@
       "MOXO_API_TOKEN"
     ]
   },
+  "skills": "./skills/",
   "mcpServers": "./mcp.json"
 }
