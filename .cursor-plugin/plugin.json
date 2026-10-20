@@ -1,7 +1,7 @@
 {
   "name": "moxo",
   "displayName": "Moxo",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Track flows, start workflows, and complete steps.",
   "author": {
     "name": "Moxo",
@@ -41,5 +41,13 @@
     ]
   },
   "skills": "./skills/",
-  "mcpServers": "./mcp.json"
+  "mcpServers": {
+    "moxo": {
+      "type": "http",
+      "url": "https://api.moxo.com/mcp-server",
+      "headers": {
+        "Authorization": "Bearer ${MOXO_API_TOKEN}"
+      }
+    }
+  }
 }

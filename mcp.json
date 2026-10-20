@@ -2,15 +2,8 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
     "moxo": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "-y",
-        "@moxo/mcp-server@1"
-      ],
-      "env": {
-        "MOXO_API_TOKEN": "${MOXO_API_TOKEN}"
-      }
+      "type": "streamable-http",
+      "url": "https://api.moxo.com/mcp-server"
     }
   }
 }
