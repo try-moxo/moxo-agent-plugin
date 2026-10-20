@@ -1,0 +1,36 @@
+{
+  "name": "moxo",
+  "version": "1.3.0",
+  "description": "Track flows, start workflows, and complete steps.",
+  "author": {
+    "name": "Moxo",
+    "email": "support@moxo.com"
+  },
+  "homepage": "https://developers.moxo.com/docs/mcp",
+  "repository": "https://github.com/try-moxo/moxo-agent-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "moxo",
+    "workflow",
+    "automation",
+    "business-process",
+    "client-portal",
+    "approvals",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.codex-mcp.json",
+  "interface": {
+    "displayName": "Moxo",
+    "shortDescription": "Track flows, start workflows, and complete steps.",
+    "longDescription": "See which Moxo flows need you, start a flow from a template, complete steps, and report on a client's flows.",
+    "developerName": "Moxo",
+    "category": "Productivity",
+    "websiteURL": "https://moxo.com",
+    "logo": "./assets/logo.png",
+    "defaultPrompt": [
+      "What's waiting on me in Moxo?",
+      "How are the Acme flows doing this month?"
+    ]
+  }
+}

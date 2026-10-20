@@ -2,6 +2,11 @@
 
 All notable changes to this plugin will be documented here.
 
+## 1.3.0
+
+- Codex: install the plugin with `codex plugin marketplace add try-moxo/moxo-agent-plugin`, then `codex plugin add moxo@moxo`. It brings the Moxo server and the three skills, and reads the token from the `MOXO_API_TOKEN` environment variable. New files: `.agents/plugins/marketplace.json`, `.codex-plugin/plugin.json` and `.codex-mcp.json`.
+- Removed the root `plugin.json` and `mcp.json` (the Agent Plugins package). When a root `plugin.json` is present, Codex takes the server from the root `mcp.json` and ignores the one in `.codex-plugin/plugin.json`, and the root file can't carry a token. The root package couldn't sign in anywhere for the same reason: the standard has no way to supply a token. Cursor and Claude Code don't read these files and are unchanged.
+
 ## 1.2.0
 
 - The plugin connects straight to Moxo's hosted server at `https://api.moxo.com/mcp-server` over HTTP again, with the token sent as `Authorization: Bearer <token>`. Moxo's servers now answer a connection on any server, so the problem that 1.0.1 worked around is gone. Node.js is no longer needed, and the plugin works in cloud agents.

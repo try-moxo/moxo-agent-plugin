@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "moxo": {
+      "type": "http",
+      "url": "https://api.moxo.com/mcp-server",
+      "bearer_token_env_var": "MOXO_API_TOKEN"
+    }
+  }
+}
