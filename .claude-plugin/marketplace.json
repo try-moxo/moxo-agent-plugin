@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "moxo",
-      "description": "Track flows, start workflows, and complete steps.",
+      "description": "Track flows, start workflows, complete steps, and design and build new workflows.",
       "source": {
         "source": "github",
         "repo": "try-moxo/moxo-agent-plugin"

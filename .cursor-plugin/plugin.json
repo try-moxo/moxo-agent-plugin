@@ -1,8 +1,8 @@
 {
   "name": "moxo",
   "displayName": "Moxo",
-  "version": "1.3.0",
-  "description": "Track flows, start workflows, and complete steps.",
+  "version": "1.4.0",
+  "description": "Track flows, start workflows, complete steps, and design and build new workflows.",
   "author": {
     "name": "Moxo",
     "email": "support@moxo.com"

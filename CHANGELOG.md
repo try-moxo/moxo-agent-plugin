@@ -2,6 +2,13 @@
 
 All notable changes to this plugin will be documented here.
 
+## 1.4.0
+
+- Two new skills for building workflows. `design-a-process` talks a process through in plain words (who is involved, the steps, decisions, deadlines, what happens when something is late or rejected, and which systems it touches), maps it onto what Moxo can do, and shows a short design to approve. `build-a-template` builds or changes the template as a draft in small, checked steps, gives you a link and a test run, and publishes only on your yes.
+- `start-flow-for-client` points to the new skills for building templates, and to a test run when you only want to try a template.
+- README: a **Build workflows** section, and the new learn, build and template setup tools.
+- Building templates needs a personal access token; an org API key can't build.
+
 ## 1.3.0
 
 - Codex: install the plugin with `codex plugin marketplace add try-moxo/moxo-agent-plugin`, then `codex plugin add moxo@moxo`. It brings the Moxo server and the three skills, and reads the token from the `MOXO_API_TOKEN` environment variable. New files: `.agents/plugins/marketplace.json`, `.codex-plugin/plugin.json` and `.codex-mcp.json`.
