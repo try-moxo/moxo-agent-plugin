@@ -4,6 +4,8 @@ All notable changes to this plugin will be documented here.
 
 ## 1.4.0
 
+- build-a-template sends `draftRevision` as `baseVersion`; `version` is the published version number.
+
 - `manage_template_versions`: list a template's published versions and restore an earlier one into the draft (running flows keep their version).
 
 - The internal-user tools use product words: `list_internal_users`, `get_internal_user`, `invite_internal_user` (were `list_team_members`, `get_team_member`, `invite_team_member`).

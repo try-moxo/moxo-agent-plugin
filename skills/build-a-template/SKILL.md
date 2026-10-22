@@ -57,13 +57,13 @@ create or change a template the user didn't ask for.
   and the first batch of changes: the roles and the first few actions. To start
   from a `find_examples` result, pass its id as `fromExample`.
 - **More changes.** Call `change_template` with the next batch and `baseVersion`
-  set to the draft version from the last result.
+  set to `draftRevision` from the last result.
 - Keep each batch to a few related changes, so a problem is easy to place.
 - A batch is all or nothing. If it is refused, nothing changed: read each issue,
   fix the batch and send it again.
 
-Each result has a `status` (`ready`, `has_issues` or `published`), the new draft
-version, the ids for the short names you gave, what changed, `fixedForYou`,
+Each result has a `status` (`ready`, `has_issues` or `published`), the draft's
+`draftRevision` (and the published `version`), the ids for the short names you gave, what changed, `fixedForYou`,
 `issues`, `needsAPerson`, links and an outline.
 
 ## 4. Check after each batch
@@ -127,14 +127,14 @@ under the user's name.
 ## Changing an existing template
 
 1. Find it with `list_templates`. If several match, ask which.
-2. Call `get_template_outline` first. Use its ids in your changes, and its draft
-   version as `baseVersion`.
+2. Call `get_template_outline` first. Use its ids in your changes, and its
+   `draftRevision` as `baseVersion`.
 3. Confirm the change in plain words, then make it, check it and show it as
    above. Changes go to the draft; the published version keeps running until the
    user publishes.
 4. If `change_template` is refused because the template changed since you read it,
    someone else edited it. Call `get_template_outline` again, rebuild your change
-   on the new version, and tell the user if their change now clashes with
+   on the new draft, and tell the user if their change now clashes with
    someone else's.
 5. To throw away unpublished changes, `discard_draft` returns the draft to the
    published version. It can't be undone, so ask first. It keeps other people's
