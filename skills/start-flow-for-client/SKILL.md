@@ -6,8 +6,10 @@ description: >
   start_flow only after the user says yes to it. Use when the user says 'start
   onboarding for Acme', 'kick off a flow for Jane Doe', 'send the KYC flow to this
   client', or 'run the tax return template for the Patels'. Not for checking on
-  flows that already exist (use morning-triage or flow-status-report), and not for
-  building or editing templates. Never starts a flow without an explicit yes.
+  flows that already exist (use morning-triage or flow-status-report), not for
+  designing or building templates (use design-a-process or build-a-template), and
+  not for trying out a template (build-a-template starts a test run). Never starts
+  a flow without an explicit yes.
 ---
 
 # Start a flow for a client
@@ -20,6 +22,9 @@ starts.
 
 Starting a flow is real. It can send emails or texts to the people on the first
 steps, and it can't be undone from here (a flow can only be cancelled after).
+
+If the user only wants to try a template, use `start_test_run` instead:
+`build-a-template` covers it.
 
 ## 1. Find the person
 
@@ -40,7 +45,8 @@ Never pick between people by guessing.
 - Call `list_templates`. Match the user's words against each template's `name` and
   `description`.
 - Only a template with `status` `ACTIVE` can start. If the best match is a draft or
-  archived, say so: it has to be published in Moxo first.
+  archived, say so: it has to be published first (`build-a-template` can do that
+  with the user's yes).
 - If more than one template fits, list them and ask. If the user named a template
   that doesn't exist, show the closest ones.
 
