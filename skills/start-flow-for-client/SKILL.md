@@ -36,7 +36,7 @@ If the user only wants to try a template, use `start_test_run` instead:
 - Several matches: show up to three with email and title, and ask which one.
 - No match: ask whether to add them. Adding is a write, so call
   `create_external_user` only after a yes. It doesn't send a portal invite.
-- Internal people for other roles come from `list_team_members`.
+- Internal people for other roles come from `list_internal_users`.
 
 Never pick between people by guessing.
 
@@ -93,8 +93,8 @@ Call `start_flow` with:
 - `fieldValues`, keyed by each field's `key` from `get_template`
 - `roleAssignments`, keyed by role name. Each value is
   `{ "kind": "contact", "id": "usr_…" }` for an external person or
-  `{ "kind": "user", "id": "usr_…" }` for a team member. Pass each `id` exactly as
-  `list_external_users`, `list_team_members` or `search` returned it. A role that
+  `{ "kind": "user", "id": "usr_…" }` for an internal user. Pass each `id` exactly as
+  `list_external_users`, `list_internal_users` or `search` returned it. A role that
   holds several people takes an array.
 
 Then report the new flow's name and what happens next.

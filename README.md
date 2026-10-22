@@ -118,7 +118,7 @@ The tool catalogue lives on Moxo's servers, so new tools appear without updating
 
 ## What the token can do
 
-A personal access token acts as you. The agent can see and do what you can in Moxo, nothing more: someone who isn't an admin sees only their own flows and can't invite team members. Revoke the token at any time in **Settings → API keys**; the plugin stops working at once.
+A personal access token acts as you. The agent can see and do what you can in Moxo, nothing more: someone who isn't an admin sees only their own flows and can't invite internal users. Revoke the token at any time in **Settings → API keys**; the plugin stops working at once.
 
 Write tools (`start_flow`, `complete_step`, `cancel_flow`, and the rest under **Actions** below) change real flows, and the build tools change and publish templates, so keep your client's tool approval on if you want to confirm each one.
 
@@ -129,11 +129,11 @@ Write tools (`start_flow`, `complete_step`, `cancel_flow`, and the rest under **
 | Your work | `list_attention_items`, `list_overdue_flows`, `get_dashboard_summary` |
 | Flows | `list_flows`, `get_flow`, `list_flow_steps`, `get_flow_step`, `query_steps`, `list_flow_messages`, `get_flow_history`, `step_files` |
 | Templates | `list_templates`, `get_template` |
-| People | `list_external_users`, `get_external_user`, `list_team_members`, `get_team_member` |
+| People | `list_external_users`, `get_external_user`, `list_internal_users`, `get_internal_user` |
 | Search, reports and history | `search`, `get_report`, `query_audit_trail`, `get_org` |
-| Actions | `start_flow`, `complete_step`, `act_on_step`, `add_step`, `upload_step_file`, `post_flow_message`, `send_reminder`, `manage_flow`, `cancel_flow`, `archive_flow`, `create_external_user`, `invite_team_member` |
+| Actions | `start_flow`, `complete_step`, `act_on_step`, `add_step`, `upload_step_file`, `post_flow_message`, `send_reminder`, `manage_flow`, `cancel_flow`, `archive_flow`, `create_external_user`, `invite_internal_user` |
 | Learn Moxo | `search_moxo_docs`, `find_examples`, `get_organization_overview`, `get_action_type`, `get_guide` |
-| Build templates | `create_template`, `change_template`, `check_template`, `get_template_outline`, `get_upload_link`, `start_test_run`, `discard_draft`, `publish_template` |
+| Build templates | `create_template`, `change_template`, `check_template`, `get_template_outline`, `get_upload_link`, `start_test_run`, `discard_draft`, `publish_template`, `manage_template_versions` |
 | Template setup | `manage_template_settings`, `manage_template_triggers`, `manage_agent`, `manage_data_table` |
 
 The server also offers three prompts (`/show_my_attention`, `/flow_activity_summary`, `/start_flow_for`) and resources for flows and your attention queue. The hosted server is the source of truth for tool names and schemas; new tools appear without reinstalling the plugin.
@@ -142,7 +142,7 @@ The server also offers three prompts (`/show_my_attention`, `/flow_activity_summ
 
 - **Self-hosted Moxo:** change the server URL to `https://<your-moxo-host>/mcp-server` after install.
 - **No header support:** a client that can only start local programs can run [`@moxo/mcp-server`](https://www.npmjs.com/package/@moxo/mcp-server) instead: `npx -y @moxo/mcp-server@1` with `MOXO_API_TOKEN` set to your token. It needs Node.js 20 or newer.
-- **Org API keys** (`mxo_sk_…`) also work as the token, but they act for the whole organization rather than a person, so tools that act as a person (`complete_step`, declining or reviewing with `act_on_step`, `post_flow_message`, `invite_team_member`, your attention queue, test runs, and agent, trigger and template settings) don't work with them, and neither does the `morning-triage` skill. Building templates works with an org key; it builds like an admin. An org key reaches only the tools its scopes allow. Use a personal access token unless you are setting up shared automation.
+- **Org API keys** (`mxo_sk_…`) also work as the token, but they act for the whole organization rather than a person, so tools that act as a person (`complete_step`, declining or reviewing with `act_on_step`, `post_flow_message`, `invite_internal_user`, your attention queue, test runs, and agent, trigger and template settings) don't work with them, and neither does the `morning-triage` skill. Building templates works with an org key; it builds like an admin. An org key reaches only the tools its scopes allow. Use a personal access token unless you are setting up shared automation.
 - Requests are limited to 600 per minute per token.
 
 ## Docs

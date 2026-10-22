@@ -4,6 +4,10 @@ All notable changes to this plugin will be documented here.
 
 ## 1.4.0
 
+- `manage_template_versions`: list a template's published versions and restore an earlier one into the draft (running flows keep their version).
+
+- The internal-user tools use product words: `list_internal_users`, `get_internal_user`, `invite_internal_user` (were `list_team_members`, `get_team_member`, `invite_team_member`).
+
 - Two new skills for building workflows. `design-a-process` talks a process through in plain words (who is involved, the steps, decisions, deadlines, what happens when something is late or rejected, and which systems it touches), maps it onto what Moxo can do, and shows a short design to approve. `build-a-template` builds or changes the template as a draft in small, checked steps, gives you a link and a test run, and publishes only on your yes.
 - `start-flow-for-client` points to the new skills for building templates, and to a test run when you only want to try a template.
 - README: a **Build workflows** section, and the new learn, build and template setup tools.
