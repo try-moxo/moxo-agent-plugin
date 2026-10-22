@@ -81,7 +81,7 @@ Describe a process and the agent builds it in Moxo with you. You can ask things 
 - "Build an invoice approval: the requester submits, a manager approves, and anything over $10,000 also goes to finance."
 - "Add a deadline to the vendor review step, then let me try it."
 
-Templates are built as a person, so this needs a personal access token (an org API key can't build). The agent can only build what you could build in Moxo yourself, with the action types on your organization's plan.
+With a personal access token the agent builds as you: only what you could build in Moxo yourself, with the action types on your organization's plan. An org API key builds like an admin. A test run needs a personal access token.
 
 Every change to a template goes to a draft, never straight to live work. The agent checks the draft after each change and fixes what it can, then gives you a link to open it in Moxo and offers a test run: you get the emails, marked [TEST], and the run stays out of live work and reports. It publishes only when you say yes.
 
@@ -132,7 +132,7 @@ Write tools (`start_flow`, `complete_step`, `cancel_flow`, and the rest under **
 | People | `list_external_users`, `get_external_user`, `list_team_members`, `get_team_member` |
 | Search and history | `search`, `query_audit_trail`, `get_org` |
 | Actions | `start_flow`, `complete_step`, `send_reminder`, `cancel_flow`, `archive_flow`, `create_external_user`, `invite_team_member` |
-| Learn Moxo | `search_moxo_docs`, `find_examples`, `get_workspace_overview`, `get_action_type`, `get_guide` |
+| Learn Moxo | `search_moxo_docs`, `find_examples`, `get_organization_overview`, `get_action_type`, `get_guide` |
 | Build templates | `create_template`, `change_template`, `check_template`, `get_template_outline`, `get_upload_link`, `start_test_run`, `discard_draft`, `publish_template` |
 | Template setup | `manage_template_settings`, `manage_template_triggers`, `manage_agent`, `manage_data_table` |
 
@@ -142,7 +142,7 @@ The server also offers three prompts (`/show_my_attention`, `/flow_activity_summ
 
 - **Self-hosted Moxo:** change the server URL to `https://<your-moxo-host>/mcp-server` after install.
 - **No header support:** a client that can only start local programs can run [`@moxo/mcp-server`](https://www.npmjs.com/package/@moxo/mcp-server) instead: `npx -y @moxo/mcp-server@1` with `MOXO_API_TOKEN` set to your token. It needs Node.js 20 or newer.
-- **Org API keys** (`mxo_sk_…`) also work as the token, but they act for the whole organization rather than a person, so tools that act as a person (`complete_step`, `invite_team_member`, your attention queue, and building templates) don't work with them, and neither do the `morning-triage`, `design-a-process` and `build-a-template` skills. An org key reaches only the tools its scopes allow. Use a personal access token unless you are setting up shared automation.
+- **Org API keys** (`mxo_sk_…`) also work as the token, but they act for the whole organization rather than a person, so tools that act as a person (`complete_step`, `invite_team_member`, your attention queue, test runs, and agent, trigger and template settings) don't work with them, and neither does the `morning-triage` skill. Building templates works with an org key; it builds like an admin. An org key reaches only the tools its scopes allow. Use a personal access token unless you are setting up shared automation.
 - Requests are limited to 600 per minute per token.
 
 ## Docs

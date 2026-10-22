@@ -53,7 +53,7 @@ Make these calls once the process is clear. None writes anything.
 1. `find_examples` with a one-line description of the process. Each example comes
    back as an outline with an example id. If one is close, say so: building from
    it is often faster than starting empty. Keep the id for `build-a-template`.
-2. `get_workspace_overview`: what this person may build, the action types on the
+2. `get_organization_overview`: what this person may build, the action types on the
    organization's plan, and the apps, secrets and AI agents it already has (by
    name). Design only with what is there.
 3. `search_moxo_docs` for each part you aren't sure Moxo can do ("can a step wait
@@ -108,6 +108,6 @@ Ask one question: "Shall I build this in Moxo as a draft?"
 - Only a clear yes counts: "yes", "build it", "go ahead". A change or a "but…"
   means update the design, show it again in full, and ask again.
 - On a yes, continue with `build-a-template`. Carry over the design, the example
-  id if there is one, and what you learned from `get_workspace_overview`.
+  id if there is one, and what you learned from `get_organization_overview`.
 - Building creates a draft only. Nothing reaches anyone until the user tries it
   with a test run and then publishes it.

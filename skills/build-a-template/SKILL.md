@@ -21,12 +21,14 @@ does (actions), the decisions, the deadlines and the apps it uses. This skill
 builds one as a draft, checks it, lets the user try it, and publishes it on their
 word.
 
-Building needs a personal access token: templates are built as a person, so an
-organization API key can't use these tools.
+A personal access token builds as its person, with that person's permissions.
+An organization API key builds like an admin, and its templates belong to the
+organization's service account. A test run needs a personal access token,
+because a person walks through the steps.
 
 ## 1. Get oriented
 
-Call `get_workspace_overview` first, every time.
+Call `get_organization_overview` first, every time.
 
 - **What this person may do.** If they can't create templates, or can't change
   this one, or can't publish, say so and stop at what they can do.
@@ -80,7 +82,7 @@ problems that were already in the template come back in `existingIssues`.
 ## 5. Secrets and things only a person can do
 
 - Never ask for, accept or pass on a password, API key or token. Refer to a
-  secret or a connected app by the name `get_workspace_overview` gave. If the
+  secret or a connected app by the name `get_organization_overview` gave. If the
   user pastes a secret into the chat, don't use or repeat it: ask them to add it
   in Moxo instead, and suggest they change it since it has been shared.
 - `needsAPerson` lists what only a person can do in Moxo: connect an app, add a
