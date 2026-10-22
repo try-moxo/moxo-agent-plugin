@@ -4,14 +4,14 @@ description: >
   Helps the user think through a business process before anything is built in
   Moxo: who is involved, the steps, the decisions, the deadlines, what happens
   when something is late or rejected, and which systems it touches. Then maps it
-  onto what Moxo can do with learn_moxo and find_examples, shows a short design in
-  plain words, and hands off to build-a-template after a yes. Use when the user
-  says 'help me set up vendor onboarding in Moxo', 'I want to automate our invoice
-  approvals', 'design a client onboarding workflow', or describes a process and
-  asks how Moxo could run it. Not for small edits to an existing template (use
-  build-a-template), not for starting a flow from a template that already exists
-  (use start-flow-for-client), and not for checking on flows. It only reads and
-  never builds without a yes.
+  onto what Moxo can do with search_moxo_docs and find_examples, shows a short
+  design in plain words, and hands off to build-a-template after a yes. Use when
+  the user says 'help me set up vendor onboarding in Moxo', 'I want to automate
+  our invoice approvals', 'design a client onboarding workflow', or describes a
+  process and asks how Moxo could run it. Not for small edits to an existing
+  template (use build-a-template), not for starting a flow from a template that
+  already exists (use start-flow-for-client), and not for checking on flows. It
+  only reads and never builds without a yes.
 ---
 
 # Design a process
@@ -53,13 +53,13 @@ Make these calls once the process is clear. None writes anything.
 1. `find_examples` with a one-line description of the process. Each example comes
    back as an outline with an example id. If one is close, say so: building from
    it is often faster than starting empty. Keep the id for `build-a-template`.
-2. `moxo_orientation`: what this person may build, the action types on the
+2. `get_workspace_overview`: what this person may build, the action types on the
    organization's plan, and the apps, secrets and AI agents it already has (by
    name). Design only with what is there.
-3. `learn_moxo` for each part you aren't sure Moxo can do ("can a step wait for a
-   signed document?", "can a flow start from an email?"). Answers come from Moxo's
-   own guides. When nothing is found, don't guess: say it isn't something you
-   could confirm, and design around it.
+3. `search_moxo_docs` for each part you aren't sure Moxo can do ("can a step wait
+   for a signed document?", "can a flow start from an email?"). Answers come from
+   Moxo's own guides. When nothing is found, don't guess: say it isn't something
+   you could confirm, and design around it.
 
 If a part of the process needs something that isn't on the plan or isn't
 connected, say so plainly and offer another way to do that part. Never design
@@ -86,7 +86,7 @@ Steps
 6. Vendor gets a welcome email
 
 Rules
-- A late step reminds the person after 1 day, then tells Procurement
+- If a step is late, remind the person, then escalate to their manager
 - A rejection at step 3 or 4 ends the flow and tells the vendor why
 
 Needs a person in Moxo
@@ -108,6 +108,6 @@ Ask one question: "Shall I build this in Moxo as a draft?"
 - Only a clear yes counts: "yes", "build it", "go ahead". A change or a "but…"
   means update the design, show it again in full, and ask again.
 - On a yes, continue with `build-a-template`. Carry over the design, the example
-  id if there is one, and what you learned from `moxo_orientation`.
+  id if there is one, and what you learned from `get_workspace_overview`.
 - Building creates a draft only. Nothing reaches anyone until the user tries it
   with a test run and then publishes it.

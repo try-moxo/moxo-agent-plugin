@@ -132,9 +132,9 @@ Write tools (`start_flow`, `complete_step`, `cancel_flow`, and the rest under **
 | People | `list_external_users`, `get_external_user`, `list_team_members`, `get_team_member` |
 | Search and history | `search`, `query_audit_trail`, `get_org` |
 | Actions | `start_flow`, `complete_step`, `send_reminder`, `cancel_flow`, `archive_flow`, `create_external_user`, `invite_team_member` |
-| Learn Moxo | `learn_moxo`, `find_examples`, `moxo_orientation`, `get_action_type`, `get_guide` |
-| Build templates | `create_template`, `change_template`, `check_template`, `describe_template`, `get_upload_link`, `start_test_run`, `discard_draft`, `publish_template` |
-| Template setup | `manage_template`, `manage_template_start`, `manage_agent`, `manage_data_table` |
+| Learn Moxo | `search_moxo_docs`, `find_examples`, `get_workspace_overview`, `get_action_type`, `get_guide` |
+| Build templates | `create_template`, `change_template`, `check_template`, `get_template_outline`, `get_upload_link`, `start_test_run`, `discard_draft`, `publish_template` |
+| Template setup | `manage_template_settings`, `manage_template_triggers`, `manage_agent`, `manage_data_table` |
 
 The server also offers three prompts (`/show_my_attention`, `/flow_activity_summary`, `/start_flow_for`) and resources for flows and your attention queue. The hosted server is the source of truth for tool names and schemas; new tools appear without reinstalling the plugin.
 

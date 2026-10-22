@@ -26,7 +26,7 @@ organization API key can't use these tools.
 
 ## 1. Get oriented
 
-Call `moxo_orientation` first, every time.
+Call `get_workspace_overview` first, every time.
 
 - **What this person may do.** If they can't create templates, or can't change
   this one, or can't publish, say so and stop at what they can do.
@@ -66,13 +66,13 @@ version, the ids for the short names you gave, what changed, `fixedForYou`,
 
 ## 4. Check after each batch
 
-Call `check_template`. It saves nothing, and it marks which issues are new and
-which were there before.
+Call `check_template`. It saves nothing. New problems come back in `issues`;
+problems that were already in the template come back in `existingIssues`.
 
-- Fix each new issue. When an issue comes with a suggested change,
-  use it.
-- Issues that were already in the template before you started are the user's
-  call. Mention them, but don't fix them unless the user asks.
+- Fix each issue in `issues`. When an issue comes with a suggested change, use
+  it.
+- `existingIssues` are the user's call. Mention them, but don't fix them unless
+  the user asks.
 - Tell the user in a line what `fixedForYou` adjusted, so nothing changes
   silently.
 - Move on to the next batch once the check shows no new issues.
@@ -80,9 +80,9 @@ which were there before.
 ## 5. Secrets and things only a person can do
 
 - Never ask for, accept or pass on a password, API key or token. Refer to a
-  secret or a connected app by the name `moxo_orientation` gave. If the user
-  pastes a secret into the chat, don't use or repeat it: ask them to add it in
-  Moxo instead, and suggest they change it since it has been shared.
+  secret or a connected app by the name `get_workspace_overview` gave. If the
+  user pastes a secret into the chat, don't use or repeat it: ask them to add it
+  in Moxo instead, and suggest they change it since it has been shared.
 - `needsAPerson` lists what only a person can do in Moxo: connect an app, add a
   secret's value, place signature fields on a document. Pass each one to the
   user with its link. Don't try to do them another way.
@@ -95,7 +95,7 @@ which were there before.
 
 After building, always show:
 
-- the outline, from the last result or from `describe_template`
+- the outline, from the last result or from `get_template_outline`
 - the link to open the draft in Moxo
 - anything in `needsAPerson`, each with its link
 - an offer to try it: "Want a test run? You'll get the emails, marked [TEST]."
@@ -125,15 +125,15 @@ under the user's name.
 ## Changing an existing template
 
 1. Find it with `list_templates`. If several match, ask which.
-2. Call `describe_template` first. Use its ids in your changes, and its draft
+2. Call `get_template_outline` first. Use its ids in your changes, and its draft
    version as `baseVersion`.
 3. Confirm the change in plain words, then make it, check it and show it as
    above. Changes go to the draft; the published version keeps running until the
    user publishes.
 4. If `change_template` is refused because the template changed since you read it,
-   someone else edited it. Call `describe_template` again, rebuild your change on
-   the new version, and tell the user if their change now clashes with someone
-   else's.
+   someone else edited it. Call `get_template_outline` again, rebuild your change
+   on the new version, and tell the user if their change now clashes with
+   someone else's.
 5. To throw away unpublished changes, `discard_draft` returns the draft to the
    published version. It can't be undone, so ask first. It keeps other people's
    changes unless the user agrees to discard those too.
@@ -143,13 +143,14 @@ under the user's name.
 Some settings sit around a template rather than in it. Each is a write, so
 confirm first.
 
-- `manage_template_start`: a schedule, an app trigger, a start by email or by
-  webhook. On a published template these start real flows, so say so when you
-  confirm.
-- `manage_template`: owners, folder, mode and chat support.
-- `manage_agent`: AI agents the template uses: list, create, update, publish and
-  add knowledge.
-- `manage_data_table`: data tables the template reads or writes.
+- `manage_template_triggers`: how flows start on their own: schedules, app
+  triggers, a start by email or by webhook. On a published template these start
+  real flows, so say so when you confirm.
+- `manage_template_settings`: owners, folder, mode, and chat support with its
+  FAQs.
+- `manage_agent`: the AI agents the template uses: list, create, update,
+  publish, and add knowledge.
+- `manage_data_table`: find, read or create the data tables the template uses.
 
 ## When it fails
 
@@ -159,4 +160,4 @@ confirm first.
 - **Action type not available:** it isn't on the organization's plan. Say so and
   offer another way to do that part.
 - **Timeout or unclear result:** the change may have gone through. Call
-  `describe_template` and look before sending it again.
+  `get_template_outline` and look before sending it again.
