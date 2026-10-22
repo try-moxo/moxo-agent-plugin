@@ -95,7 +95,7 @@ Open and on track
 - Give each late step its assignee and how late it is.
 - Name each flow so the user can find it in Moxo. Where the client can open MCP
   resources, link it as `[Flow name](moxo://flows/{id})`.
-- If the report is going to the client, ask before including team members' names
+- If the report is going to the client, ask before including internal users' names
   or internal steps.
 
 This skill doesn't send anything. If the user wants to share the report, they copy
