@@ -8,6 +8,7 @@ All notable changes to this plugin will be documented here.
 - `start-flow-for-client` points to the new skills for building templates, and to a test run when you only want to try a template.
 - README: a **Build workflows** section, and the new learn, build and template setup tools.
 - Build with a personal access token (as you) or an org API key (like an admin). A test run needs a personal access token.
+- README lists every tool the server offers, including `act_on_step`, `add_step`, `manage_flow`, `post_flow_message`, `upload_step_file`, `step_files`, `get_flow_history` and `get_report`.
 
 ## 1.3.0
 
