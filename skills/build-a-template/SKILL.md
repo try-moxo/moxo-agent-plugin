@@ -146,8 +146,9 @@ Some settings sit around a template rather than in it. Each is a write, so
 confirm first.
 
 - `manage_template_triggers`: how flows start on their own: schedules, app
-  triggers, a start by email or by webhook. On a published template these start
-  real flows, so say so when you confirm.
+  triggers, a start by email or by webhook, and which webhook fields fill which
+  template fields (try the mapping with a sample before saving it). On a
+  published template these start real flows, so say so when you confirm.
 - `manage_template_settings`: owners, folder, mode, and chat support with its
   FAQs.
 - `manage_agent`: the AI agents the template uses: list, create, update,
@@ -156,9 +157,10 @@ confirm first.
 
 ## When it fails
 
-- **No access:** the token acts as the user. If they can't build or publish this
-  template in Moxo, the agent can't either. An organization API key can't build
-  at all.
+- **No access:** a personal access token acts as the user. If they can't build
+  or publish this template in Moxo, the agent can't either. An organization API
+  key builds like an admin but can't start a test run; ask for a personal access
+  token for that.
 - **Action type not available:** it isn't on the organization's plan. Say so and
   offer another way to do that part.
 - **Timeout or unclear result:** the change may have gone through. Call
